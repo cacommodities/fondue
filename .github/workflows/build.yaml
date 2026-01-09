@@ -1,0 +1,11 @@
+name: Build and Push
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build-push-docker-image:
+    uses: cacommodities/gha-shared/.github/workflows/build-push-docker-image.yaml@1.66
+    secrets: inherit
+    with:
+      major-minor-version: "1.0"
