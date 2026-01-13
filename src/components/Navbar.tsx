@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 import { getEnvVarOrDefault } from "../envVariablesAccess";
 import { Popper } from "@cac/react-utils";
 import { clsx } from "clsx";

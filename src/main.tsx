@@ -1,70 +1,59 @@
-import { initializeTheme } from "./theme";
-initializeTheme();
+import { enableMapSet } from 'immer'
+import { StrictMode, createContext, useContext } from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css'
 
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import "./theme"; // Initialize theme on app startup
-import { createHashRouter, Outlet, useLocation } from "react-router";
-import { RouterProvider } from "react-router/dom";
-import HomeView from "./views/HomeView";
-import NotFoundView from "./views/NotFoundView";
-import Navbar from "./components/Navbar";
-import { ErrorBoundary } from "./components/ErrorBoundary";
-import { initExtraRootContainers } from "@cac/react-utils";
-import TestView from "./views/TestView";
-initExtraRootContainers();
+import {
+  createBrowserRouter,
+  Outlet,
+  RouterProvider
+} from 'react-router-dom'
 
-function ErrorBoundaryWrapper() {
-  const location = useLocation();
-  return (
-    <ErrorBoundary resetKey={location.pathname}>
-      <Outlet />
-    </ErrorBoundary>
-  );
-}
+import { enableImmerMapSet } from '@cac/forest-ui'
+import { LibrarianClient } from '@cac/librarian-typescript'
+import { Root } from './views/Root'
+import Navbar from './components/Navbar'
+import { initExtraRootContainers } from '@cac/react-utils'
 
-export function BaseView() {
-  return (
-    <>
-      <Navbar />
-      <ErrorBoundaryWrapper />
-    </>
-  );
+enableMapSet()
+enableImmerMapSet()
+initExtraRootContainers()
+
+const librarianUrl = 'https://librarian.backends.cacom.dk'
+export const LibrarianContext = createContext<LibrarianClient | null>(null)
+export const useSharedLibrarianClient = (): LibrarianClient => {
+  const librarianClient = useContext(LibrarianContext)
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return librarianClient!
 }
 
 // For full page view
-// export function BaseView() {
-//   return (
-//     <div className="flex h-screen flex-col">
-//       <div>
-//         <Navbar />
-//       </div>
-//       <div className="flex-1 overflow-y-auto">
-//         <Outlet />
-//       </div>
-//     </div>
-//   );
-// }
+const Page = (): JSX.Element => {
+  return <div className='flex h-screen flex-col'>
+    <Navbar />
+    <div className='flex-1 overflow-y-auto'>
+      <Outlet />
+    </div>
+  </div>
+}
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
-    Component: BaseView,
+    path: '/',
+    element: <Page />,
     children: [
       {
-        path: "/",
-        Component: HomeView,
-      },
-      {
-        path: "test",
-        Component: TestView,
-      },
-      {
-        path: "*",
-        Component: NotFoundView,
-      },
-    ],
-  },
-]);
+        path: '/',
+        element: <Root />
+      }
+    ]
+  }
+])
 
-const root = document.getElementById("root");
-createRoot(root!).render(<RouterProvider router={router} />);
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <LibrarianContext.Provider value={new LibrarianClient(librarianUrl, librarianUrl)}>
+      <RouterProvider router={router} />
+    </LibrarianContext.Provider>
+  </StrictMode>
+)

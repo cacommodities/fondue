@@ -1,0 +1,105 @@
+import { tooltipPositionF, useThemeListener } from "@cac/react-utils";
+import type { Data } from "./Root";
+import { DataVisualizer } from "@cac/forest-ui";
+import type { ChartsOption } from "@cac/forest-ui/dist/DataVisualizer/types";
+import { useMemo } from "react";
+
+export const Load = ({ data }: { data: Data }): JSX.Element => {
+    const { colors } = useThemeListener()
+
+    const option = useMemo<ChartsOption>(() => {
+        return {
+            title: {
+                text: 'Load',
+                left: 'center'
+            },
+            grid: [
+                {
+                    top: '5%',
+                    height: '65%',
+                    right: 60,
+                    left: 50
+                },
+                {
+                    top: '75%',
+                    height: '20%',
+                    right: 60,
+                    left: 50
+                }
+            ],
+            xAxis: [
+                {
+                    type: 'time',
+                },
+                {
+                    type: 'time',
+                    gridIndex: 1,
+                    axisLine: { show: false },
+                    axisTick: { show: false },
+                    splitLine: { show: false },
+                    axisLabel: { show: false },
+                    scale: true
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    scale: true
+                },
+                {
+                    type: 'value',
+                    gridIndex: 1
+                }
+            ],
+            axisPointer: {
+                link: [
+                    {
+                        xAxisIndex: 'all'
+                    }
+                ]
+            },
+            legend: {
+                orient: 'horizontal',
+                type: 'scroll',
+                right: 'center',
+                top: 'bottom',
+                width: '100%'
+            },
+            tooltip: {
+                trigger: 'axis',
+                position: tooltipPositionF
+
+            },
+            series: [
+              
+                {
+                    name: 'EnergyCharts Actual',
+                    data: data.energyChartsLoadActual,
+                    type: 'line',
+                    smooth: true,
+                    showSymbol: false,
+                    color: colors.actual1.toString()
+                },
+                {
+                    name: 'ENTSOE Day Ahead Forecast',
+                    data: data.entsoeLoadDaForecast,
+                    type: 'line',
+                    smooth: true,
+                    showSymbol: false,
+                    color: colors.actual2.toString(),
+
+                    lineStyle: {
+                        type: 'dashed'
+                    }
+                },
+
+            ]
+        }
+    }, [data, colors])
+
+    return (
+        <div className="h-full">
+            <DataVisualizer options={option} />
+        </div>
+    )
+}
