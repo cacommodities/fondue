@@ -1,5 +1,5 @@
 import { tooltipPositionF, useThemeListener } from "@cac/react-utils";
-import type { Data } from "./Root";
+import type { Data } from "../views/Root";
 import { DataVisualizer } from "@cac/forest-ui";
 import type { ChartsOption } from "@cac/forest-ui/dist/DataVisualizer/types";
 import { useMemo } from "react";
@@ -95,6 +95,30 @@ export const Solar = ({ data }: { data: Data }): JSX.Element => {
           smooth: true,
           showSymbol: false,
           color: colors.actual2.toString()
+        },
+        {
+          name: 'SolarLog Actual',
+          data: data.solarLogActual,
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          color: colors.meteologica1.toString()
+        },
+        {
+          name: 'SolarLog Additional Extrapolation',
+          data: data.solarLogAdditionalExtrapolation,
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          color: colors.meteologica2.toString()
+        },
+        {
+          name: 'SolarLog Sum Actual',
+          data: data.solarLogSumActual,
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          color: colors.yellow1.toString()
         },
         {
           name: 'EnergyCharts Day Ahead Forecast',

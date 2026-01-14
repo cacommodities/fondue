@@ -1,16 +1,16 @@
 import { tooltipPositionF, useThemeListener } from "@cac/react-utils";
-import type { Data } from "./Root";
+import type { Data } from "../views/Root";
 import { DataVisualizer } from "@cac/forest-ui";
 import type { ChartsOption } from "@cac/forest-ui/dist/DataVisualizer/types";
 import { useMemo } from "react";
 
-export const Wind = ({ data }: { data: Data }): JSX.Element => {
+export const Load = ({ data }: { data: Data }): JSX.Element => {
     const { colors } = useThemeListener()
 
     const option = useMemo<ChartsOption>(() => {
         return {
             title: {
-                text: 'Wind',
+                text: 'Load',
                 left: 'center'
             },
             grid: [
@@ -71,42 +71,36 @@ export const Wind = ({ data }: { data: Data }): JSX.Element => {
 
             },
             series: [
-                {
-                    name: 'EnergyCharts Forecast',
-                    data: data.energyChartsWindIntradayForecast,
-                    type: 'line',
-                    smooth: true,
-                    showSymbol: false,
-                    color: colors.tso1.toString()
-                },
+              
                 {
                     name: 'EnergyCharts Actual',
-                    data: data.energyChartsWindActual,
+                    data: data.energyChartsLoadActual,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
                     color: colors.actual1.toString()
                 },
                 {
-                    name: 'ENTSOE Actual',
-                    data: data.entsoeWindActual,
+                    name: 'ENTSOE Realized Load',
+                    data: data.entsoeRealizedLoad,
+                    type: 'line',
+                    smooth: true,
+                    showSymbol: false,
+                    color: colors.tso1.toString()
+                },
+                {
+                    name: 'ENTSOE Day Ahead Forecast',
+                    data: data.entsoeLoadDaForecast,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
                     color: colors.actual2.toString(),
-                },
-                {
-                    name: 'EnergyCharts Day Ahead Forecast',
-                    data: data.energyChartsWindDaForecast,
-                    type: 'line',
-                    smooth: true,
-                    showSymbol: false,
-                    color: colors.tso1.toString(),
+
                     lineStyle: {
                         type: 'dashed'
-
                     }
-                }
+                },
+
             ]
         }
     }, [data, colors])

@@ -1,5 +1,5 @@
 import { tooltipPositionF, useThemeListener } from "@cac/react-utils";
-import type { Data } from "./Root";
+import type { Data } from "../views/Root";
 import { DataVisualizer } from "@cac/forest-ui";
 import type { ChartsOption } from "@cac/forest-ui/dist/DataVisualizer/types";
 import { useMemo } from "react";

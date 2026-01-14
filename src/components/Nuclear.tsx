@@ -1,16 +1,16 @@
 import { tooltipPositionF, useThemeListener } from "@cac/react-utils";
-import type { Data } from "./Root";
+import type { Data } from "../views/Root";
 import { DataVisualizer } from "@cac/forest-ui";
 import type { ChartsOption } from "@cac/forest-ui/dist/DataVisualizer/types";
 import { useMemo } from "react";
 
-export const Load = ({ data }: { data: Data }): JSX.Element => {
+export const Nuke = ({ data }: { data: Data }): JSX.Element => {
     const { colors } = useThemeListener()
 
     const option = useMemo<ChartsOption>(() => {
         return {
             title: {
-                text: 'Load',
+                text: 'Nuclear',
                 left: 'center'
             },
             grid: [
@@ -71,26 +71,15 @@ export const Load = ({ data }: { data: Data }): JSX.Element => {
 
             },
             series: [
-              
-                {
-                    name: 'EnergyCharts Actual',
-                    data: data.energyChartsLoadActual,
+               
+                 {
+                    name: 'Entsoe actual',
+                    data: data.entsoeNuclearActual,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.actual1.toString()
-                },
-                {
-                    name: 'ENTSOE Day Ahead Forecast',
-                    data: data.entsoeLoadDaForecast,
-                    type: 'line',
-                    smooth: true,
-                    showSymbol: false,
-                    color: colors.actual2.toString(),
+                    color: colors.tso2.toString()
 
-                    lineStyle: {
-                        type: 'dashed'
-                    }
                 },
 
             ]

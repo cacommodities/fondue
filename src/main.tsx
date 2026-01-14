@@ -12,8 +12,8 @@ import {
 import { enableImmerMapSet } from '@cac/forest-ui'
 import { LibrarianClient } from '@cac/librarian-typescript'
 import { Root } from './views/Root'
-import Navbar from './components/Navbar'
 import { initExtraRootContainers } from '@cac/react-utils'
+import { Header } from './components/Header'
 
 enableMapSet()
 enableImmerMapSet()
@@ -30,7 +30,7 @@ export const useSharedLibrarianClient = (): LibrarianClient => {
 // For full page view
 const Page = (): JSX.Element => {
   return <div className='flex h-screen flex-col'>
-    <Navbar />
+    <Header />
     <div className='flex-1 overflow-y-auto'>
       <Outlet />
     </div>

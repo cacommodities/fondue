@@ -1,16 +1,16 @@
 import { tooltipPositionF, useThemeListener } from "@cac/react-utils";
-import type { Data } from "./Root";
+import type { Data } from "../views/Root";
 import { DataVisualizer } from "@cac/forest-ui";
 import type { ChartsOption } from "@cac/forest-ui/dist/DataVisualizer/types";
 import { useMemo } from "react";
 
-export const Nuke = ({ data }: { data: Data }): JSX.Element => {
+export const Wind = ({ data }: { data: Data }): JSX.Element => {
     const { colors } = useThemeListener()
 
     const option = useMemo<ChartsOption>(() => {
         return {
             title: {
-                text: 'Nuclear',
+                text: 'Wind',
                 left: 'center'
             },
             grid: [
@@ -71,17 +71,42 @@ export const Nuke = ({ data }: { data: Data }): JSX.Element => {
 
             },
             series: [
-               
-                 {
-                    name: 'Entsoe actual',
-                    data: data.entsoeNuclearActual,
+                {
+                    name: 'EnergyCharts Forecast',
+                    data: data.energyChartsWindIntradayForecast,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.tso2.toString()
-
+                    color: colors.tso1.toString()
                 },
+                {
+                    name: 'EnergyCharts Actual',
+                    data: data.energyChartsWindActual,
+                    type: 'line',
+                    smooth: true,
+                    showSymbol: false,
+                    color: colors.actual1.toString()
+                },
+                {
+                    name: 'ENTSOE Actual',
+                    data: data.entsoeWindActual,
+                    type: 'line',
+                    smooth: true,
+                    showSymbol: false,
+                    color: colors.actual2.toString(),
+                },
+                {
+                    name: 'EnergyCharts Day Ahead Forecast',
+                    data: data.energyChartsWindDaForecast,
+                    type: 'line',
+                    smooth: true,
+                    showSymbol: false,
+                    color: colors.tso1.toString(),
+                    lineStyle: {
+                        type: 'dashed'
 
+                    }
+                }
             ]
         }
     }, [data, colors])
