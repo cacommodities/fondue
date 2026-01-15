@@ -1,4 +1,4 @@
-import { tooltipPositionF, useThemeListener } from "@cac/react-utils";
+import { useThemeListener } from "@cac/react-utils";
 import type { Data } from "../views/Root";
 import { DataVisualizer } from "@cac/forest-ui";
 import type { ChartsOption } from "@cac/forest-ui/dist/DataVisualizer/types";
@@ -67,7 +67,6 @@ export const Solar = ({ data }: { data: Data }): JSX.Element => {
       },
       tooltip: {
         trigger: 'axis',
-        position: tooltipPositionF
 
       },
       series: [
@@ -77,7 +76,7 @@ export const Solar = ({ data }: { data: Data }): JSX.Element => {
           type: 'line',
           smooth: true,
           showSymbol: false,
-          color: colors.tso1.toString()
+          color: colors.meteologica1.toString()
 
         },
         {
@@ -86,7 +85,7 @@ export const Solar = ({ data }: { data: Data }): JSX.Element => {
           type: 'line',
           smooth: true,
           showSymbol: false,
-          color: colors.actual1.toString()
+          color: colors.meteologica2.toString()
         },
         {
           name: 'ENTSOE Actual',
@@ -94,31 +93,42 @@ export const Solar = ({ data }: { data: Data }): JSX.Element => {
           type: 'line',
           smooth: true,
           showSymbol: false,
-          color: colors.actual2.toString()
+          color: colors.actual1.toString()
         },
+        {
+          name: 'ENTSOE Day Ahead Forecast',
+          data: data.entsoeSolarDaForecast,
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          color: colors.tso1.toString(),
+          lineStyle: {
+            type: 'dashed'
+        }
+        },
+        // {
+        //   name: 'SolarLog Actual',
+        //   data: data.solarLogActual,
+      //   type: 'line',
+        //   smooth: true,
+        //   showSymbol: false,
+        //   color: colors.solcast1.toString()
+        // },
+        // {
+        //   name: 'SolarLog Additional Extrapolation',
+        //   data: data.solarLogAdditionalExtrapolation,
+        //   type: 'line',
+        //   smooth: true,
+        //   showSymbol: false,
+        //   color: colors.arpege1.toString()
+        // },
         {
           name: 'SolarLog Actual',
-          data: data.solarLogActual,
-          type: 'line',
-          smooth: true,
-          showSymbol: false,
-          color: colors.meteologica1.toString()
-        },
-        {
-          name: 'SolarLog Additional Extrapolation',
-          data: data.solarLogAdditionalExtrapolation,
-          type: 'line',
-          smooth: true,
-          showSymbol: false,
-          color: colors.meteologica2.toString()
-        },
-        {
-          name: 'SolarLog Sum Actual',
           data: data.solarLogSumActual,
           type: 'line',
           smooth: true,
           showSymbol: false,
-          color: colors.yellow1.toString()
+          color: colors.solcast1.toString()
         },
         {
           name: 'EnergyCharts Day Ahead Forecast',
@@ -126,7 +136,7 @@ export const Solar = ({ data }: { data: Data }): JSX.Element => {
           type: 'line',
           smooth: true,
           showSymbol: false,
-          color: colors.tso1.toString(),
+          color: colors.meteologica1.toString(),
           lineStyle: {
             type: 'dashed'
 

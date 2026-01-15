@@ -67,7 +67,6 @@ export const Wind = ({ data }: { data: Data }): JSX.Element => {
             },
             tooltip: {
                 trigger: 'axis',
-                position: tooltipPositionF
 
             },
             series: [
@@ -77,7 +76,7 @@ export const Wind = ({ data }: { data: Data }): JSX.Element => {
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.tso1.toString()
+                    color: colors.meteologica1.toString()
                 },
                 {
                     name: 'EnergyCharts Actual',
@@ -85,7 +84,19 @@ export const Wind = ({ data }: { data: Data }): JSX.Element => {
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.actual1.toString()
+                    color: colors.meteologica2.toString()
+                },
+                {
+                    name: 'ENTSOE Day Ahead Forecast',
+                    data: data.entsoeWindDaForecast,
+                    type: 'line',
+                    smooth: true,
+                    showSymbol: false,
+                    color: colors.tso1.toString(),
+                    lineStyle: {
+                        type: 'dashed'
+
+                    }  
                 },
                 {
                     name: 'ENTSOE Actual',
@@ -93,7 +104,7 @@ export const Wind = ({ data }: { data: Data }): JSX.Element => {
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.actual2.toString(),
+                    color: colors.actual1.toString(),
                 },
                 {
                     name: 'EnergyCharts Day Ahead Forecast',

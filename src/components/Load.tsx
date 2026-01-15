@@ -67,7 +67,6 @@ export const Load = ({ data }: { data: Data }): JSX.Element => {
             },
             tooltip: {
                 trigger: 'axis',
-                position: tooltipPositionF
 
             },
             series: [
@@ -78,15 +77,15 @@ export const Load = ({ data }: { data: Data }): JSX.Element => {
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.actual1.toString()
+                    color: colors.meteologica1.toString()
                 },
                 {
                     name: 'ENTSOE Realized Load',
-                    data: data.entsoeRealizedLoad,
+                    data: data.entsoeLoadActual,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.tso1.toString()
+                    color: colors.actual1.toString()
                 },
                 {
                     name: 'ENTSOE Day Ahead Forecast',
@@ -94,7 +93,7 @@ export const Load = ({ data }: { data: Data }): JSX.Element => {
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.actual2.toString(),
+                    color: colors.tso1.toString(),
 
                     lineStyle: {
                         type: 'dashed'

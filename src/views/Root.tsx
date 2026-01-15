@@ -8,15 +8,15 @@ import { Wind } from '../components/Wind'
 import { Load } from '../components/Load'
 import { Nuke } from '../components/Nuclear'
 import { Hydro } from '../components/Hydro'
-
-
-
+import type { ChangesPrototypeGroup } from '@cac/forest-ui/dist/ChangesVisualizerNew'
+import { ChangesNew } from '../components/Changes'
 
 
 export const dataPointToEChartsDataPoint = (dataPoint: { timestamp: Date, value: number }): [Date, number] => {
     return [dataPoint.timestamp, dataPoint.value]
 }
 const entsoeSolarActual = f.fetchLatest('ENTSOE_CH_SOLAR-ACTUAL')
+const entsoeSolarDaForecast = f.fetchLatest('ENTSOE_CH_SOLAR-DA')
 const energyChartsSolarActual = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-SOLAR')
 const energyChartsSolarForecast = f.fetchLatest('ENERGY-CHARTS_CH_SOLAR-INTRADAY-FORECAST')
 const energyChartsSolarDaForecast = f.fetchLatest('ENERGY-CHARTS_CH_SOLAR-DAY-AHEAD-FORECAST')
@@ -24,8 +24,8 @@ const solarLogActual = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-SOLAR-SOLARL
 const solarLogAdditionalExtrapolation = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-SOLAR-ADDITIONAL-EXTRAPOLATION')
 const solarLogSumActual = f.sum({ requireAllAddends: true })([solarLogActual, solarLogAdditionalExtrapolation])
 
-
 const entsoeWindActual = f.fetchLatest('ENTSOE_CH_WIND-ONSHORE-ACTUAL')
+const entsoeWindDaForecast = f.fetchLatest('ENTSOE_CH_WIND-DA')
 const energyChartsWindDaForecast = f.fetchLatest('ENERGY-CHARTS_CH_WIND_ONSHORE-DAY-AHEAD-FORECAST')
 const energyChartsWindIntradayForecast = f.fetchLatest('ENERGY-CHARTS_CH_WIND_ONSHORE-INTRADAY-FORECAST')
 const energyChartsWindActual = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-WIND-ONSHORE')
@@ -33,21 +33,15 @@ const energyChartsWindActual = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-WIND
 const energyChartsLoadActual = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-LOAD')
 const entsoeLoadDaForecast = f.fetchLatest('EntsoeDaLoadCH')
 const enstoeDaGenerationForecast = f.fetchLatest('EntsoeDaGenerationCH')
-
+const entsoeLoadActual = f.fetchLatest('EntsoeRealisedLoadCH')
 
 const energyChartsHydroRunOfRiverActual = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-HYDRO-RUN-OF-RIVER')
 const energyChartsHydroReservoirActual = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-HYDRO-WATER-RESERVOIR')
 const energyChartsHydroPumpedStorageActual = f.fetchLatest('ENERGY-CHARTS_CH_PUBLIC_POWER-HYDRO-PUMPED-STORAGE')
 const entsoeNuclearActual = f.fetchLatest('ENTSOE_CH_POWER-NUCLEAR-ACTUAL')
 const entsoeHydroRunOfRiverActual = f.fetchLatest('ENTSOE_CH_HYDRO-WATER-RESERVOIR-ACTUAL')
-const entsoeHydroReservoirActual = f.fetchLatest('ENTSOE_CH_HYDRO-RESERVOIR-ACTUAL')
+const entsoeHydroReservoirActual = f.fetchLatest('ENTSOE_CH_HYDRO-WATER-RESERVOIR-ACTUAL')
 const entsoeHydroPumpedStorageActual = f.fetchLatest('ENTSOE_CH_POWER-HYDRO-PUMPED-STORAGE-ACTUAL')
-
-
-
-
-
-
 
 
 const treesDefinition = {
@@ -71,10 +65,48 @@ const treesDefinition = {
     entsoeNuclearActual,
     solarLogActual,
     solarLogAdditionalExtrapolation,
-    solarLogSumActual
-
-
+    solarLogSumActual,
+    entsoeWindDaForecast,
+    entsoeSolarDaForecast,
+    entsoeLoadActual
 }
+
+export const changesVisualizerGroups: Array<ChangesPrototypeGroup<keyof typeof treesDefinition>> = [
+    {
+        id: 'Solar',
+        label: 'Solar',
+        minDpChange: 100,
+        minDpChangePct: 0.2,
+        enabledDataKeys: [
+            'energyChartsSolarForecast',
+            'energyChartsSolarDaForecast',
+            'entsoeSolarDaForecast'],
+
+        onByDefault: true
+    },
+    {
+        id: 'Wind',
+        label: 'Wind',
+        minDpChange: 100,
+        minDpChangePct: 0.2,
+        enabledDataKeys: [
+            'energyChartsWindDaForecast',
+            'energyChartsWindIntradayForecast',
+            'entsoeWindDaForecast'],
+        onByDefault: true
+    },
+    {
+        id: 'Load',
+        label: 'Load',
+        minDpChange: 100,
+        minDpChangePct: 0.2,
+        enabledDataKeys: [
+            'entsoeLoadDaForecast',
+        ],
+        onByDefault: true
+    },
+
+]
 export type Data = Record<keyof typeof treesDefinition, DataPoint[]>
 
 export const Root = (): JSX.Element => {
@@ -98,7 +130,7 @@ export const Root = (): JSX.Element => {
         }
     }, [timestampFrom, now])
 
-    const { data, errors } = useDSOTreeObj({
+    const { data } = useDSOTreeObj({
         timestampFrom,
         timestampTo,
         trees: treesDefinition,
@@ -126,12 +158,15 @@ export const Root = (): JSX.Element => {
                     </div>
                     <div className='min-h-[30vh] flex-1'>
                         <Nuke data={data} />
+
                     </div>
                     <div className='min-h-[30vh] flex-1'>
                         <Hydro data={data} />
                     </div>
-                </div>
-
+                    <div className='min-h-[30vh] flex-1'>
+                        <ChangesNew data={data} groups={changesVisualizerGroups} />
+                    </div>
+                </div >
             </div >
         </div >
     )

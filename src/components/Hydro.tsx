@@ -67,48 +67,47 @@ export const Hydro = ({ data }: { data: Data }): JSX.Element => {
             },
             tooltip: {
                 trigger: 'axis',
-                position: tooltipPositionF
 
             },
             series: [
                 {
-                    name: 'EnergyCharts Run of River Actual',
+                    name: 'EnergyCharts Run of River',
                     data: data.energyChartsHydroRunOfRiverActual,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.tso1.toString()
+                    color: colors.meteologica1.toString()
 
                 },
                 {
-                    name: 'Entsoe Run of River actual',
+                    name: 'Entsoe Run of River',
                     data: data.entsoeHydroRunOfRiverActual,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.tso2.toString()
+                    color: colors.actual1.toString()
 
                 },
                 {
-                    name: 'EnergyCharts Reservoir Actual',
+                    name: 'EnergyCharts Reservoir',
                     data: data.energyChartsHydroReservoirActual,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.meteologica1.toString()
+                    color: colors.meteologica2.toString()
 
                 },
                 {
-                    name: 'Entsoe Reservoir actual',
+                    name: 'Entsoe Reservoir',
                     data: data.entsoeHydroReservoirActual,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.meteologica1.toString()
+                    color: colors.actual2.toString()
 
                 },
                 {
-                    name: 'EnergyCharts Pumped Storage Actual',
+                    name: 'EnergyCharts Pumped Storage',
                     data: data.energyChartsHydroPumpedStorageActual,
                     type: 'line',
                     smooth: true,
@@ -117,12 +116,12 @@ export const Hydro = ({ data }: { data: Data }): JSX.Element => {
 
                 },
                 {
-                    name: 'Entsoe Pumped Storage actual',
+                    name: 'Entsoe Pumped Storage',
                     data: data.entsoeHydroPumpedStorageActual,
                     type: 'line',
                     smooth: true,
                     showSymbol: false,
-                    color: colors.solcast1.toString()
+                    color: colors.tso3.toString()
 
                 },
 

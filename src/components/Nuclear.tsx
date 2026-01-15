@@ -39,17 +39,23 @@ export const Nuke = ({ data }: { data: Data }): JSX.Element => {
                     splitLine: { show: false },
                     axisLabel: { show: false },
                     scale: true
+
                 }
             ],
             yAxis: [
                 {
                     type: 'value',
-                    scale: true
+                    scale: false,
+                    min: 0
                 },
                 {
                     type: 'value',
-                    gridIndex: 1
+                    gridIndex: 1,
+                    min: 0, 
+                    scale: false
+
                 }
+
             ],
             axisPointer: {
                 link: [
@@ -67,12 +73,11 @@ export const Nuke = ({ data }: { data: Data }): JSX.Element => {
             },
             tooltip: {
                 trigger: 'axis',
-                position: tooltipPositionF
 
             },
             series: [
-               
-                 {
+
+                {
                     name: 'Entsoe actual',
                     data: data.entsoeNuclearActual,
                     type: 'line',
