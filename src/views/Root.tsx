@@ -145,8 +145,8 @@ export const Root = (): JSX.Element => {
                     date={date}
                     setDate={(i) => { setDate(i!) }} />
             </div>
-            <div className='flex-1 overflow-hidden'>
-                <div className='grid flex-1 grid-cols-2 grid-rows-2'>
+            <div className='min-h-0 flex-1 overflow-hidden'>
+                <div className='w-full grid grid-cols-2 grid-rows-2'>
                     <div className='min-h-[30vh] flex-1'>
                         <Solar data={data} />
                     </div>

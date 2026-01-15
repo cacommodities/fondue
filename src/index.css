@@ -3,13 +3,5 @@
 @source "../node_modules/@cac/react-utils";
 
 @plugin "daisyui" {
-  themes: light --default, luxury --prefersdark;
-}
-
-@custom-variant dark (&:where([data-theme=luxury], [data-theme=luxury] *));
-
-
-@plugin "daisyui/theme" {
-  name: "luxury";
-  --color-primary: oklch(81% 0.117 11.638);
+  themes: dark --default, light --prefersdark;
 }
